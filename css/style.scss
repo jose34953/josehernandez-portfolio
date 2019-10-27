@@ -1,0 +1,506 @@
+// https://yoksel.github.io/flex-cheatsheet/#align-content
+// A common problem for me: https://stackoverflow.com/questions/34331102/how-to-display-wrapping-flex-items-as-space-between-with-last-row-aligned-left
+/* Screen Sizes */
+$mobile: 480px;
+$wideMobile: 788px;
+$tablet: 992px;
+$desktop: 1200px;
+
+/* Colors */
+$yellow: #FCD307;
+$light-yellow: #F9DF5D;
+$dark-yellow: #FCAA07;
+
+$light-grey: #EFEFEF;
+$grey: #524E4F;
+$dark-grey: #313131;
+
+@font-face {
+    font-family: '8BitWonder';
+    src: url('/fonts/8-BITWONDER.TTF'),
+    url('/fonts/8-BITWONDER.TTF')  format('truetype'), /* Safari, Android, iOS */;
+}
+@font-face {
+    font-family: 'Raleway-Regular';
+    src: url('/fonts/raleway/Raleway-Regular.TTF'),
+    url('/fonts/raleway/Raleway-Regular.TTF')  format('truetype'), /* Safari, Android, iOS */;
+}
+
+h1, h2, h3, h4, h5, h6, a {
+    font-family: '8BitWonder', sans-serif;
+}
+a {
+    color: black;
+}
+p {
+    font-family: 'Raleway-Regular', sans-serif;
+    line-height: 1.5rem;
+    letter-spacing: .1rem;
+}
+
+/* Quick Classes */
+.white-text {
+    color: white;
+}
+.yellow-text {
+    color: $yellow;
+}
+.text-align-center {
+    text-align: center;
+}
+
+/* Quick Mixins */
+@mixin smallBoxShadow ($up, $right, $down, $left, $op) {
+    box-shadow: $up $right $down $left rgba(0, 0, 0, $op);
+}
+
+@mixin flexFullCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin overlay ($opa) {
+    content: "";
+    transition: 1s;
+    width: 100%;
+    height: 100%;
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(249,223,93,$opa);
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+// @mixin card ($cardWidth, $cardRadius, $cardBg) {
+//     background-color: $cardBg;
+//     width: $cardWidth;
+//     border-radius: 
+// }
+
+/* Media Query */
+@mixin mQ($arg){
+    @media screen and (max-width: $arg) {
+        @content;
+    }
+}
+
+
+/* Config */
+* {
+    box-sizing: border-box;
+}
+h1, h2, h3, h4, h5, h6 {
+    padding: 0;
+    margin: 0;
+}
+ul, li {
+    list-style-type: none;
+}
+a {
+    text-decoration: none; /* no underline */
+}
+
+button
+.row {
+    display: flex;
+    flex-direction: column;
+}
+
+.col {
+    // background-color: teal;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    // border: 1px solid black;
+}
+
+.container {
+    min-height: 100vh;
+}
+
+/* Header */
+.hero {
+    
+}
+.hero-bg {
+    background-image: url(/img/scattered_squares_bg.svg);
+    background-color: $grey;
+    height: 25em; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-size: cover; /* Resize the background image to cover the entire container */
+
+    @include mQ($tablet) {
+        height: 10em;
+    }
+}
+.hero-text {
+    @include flexFullCenter();
+    flex-direction: column;
+    height: 100%;
+    color: white;
+    line-height: 2rem;
+    h1 {
+        line-height: 3rem;
+    }
+
+    @include mQ($mobile) {
+        line-height: 1rem;
+        h1 {
+            line-height: 2rem;
+            font-size: 1rem;
+        }
+        h5 {
+            font-size: .5rem;
+        }
+    }
+}
+
+/* Nav */
+.nav-container {
+    background-color: $light-yellow;
+    @include smallBoxShadow(0, 0, .4em, 0, .4);
+    ul {
+        display: flex;
+        justify-content: center;
+    }
+    li {
+        padding: .4em 1.5em .4em 1.5em;
+    }
+
+    @include mQ($mobile) {
+        ul {
+            flex-direction: column;
+            text-align: center;
+            padding: 0;
+        }
+    }
+    a {
+        font-family: '8BitWonder', sans-serif;
+        font-size: .8em;
+        padding: 1em;
+
+        &:hover {
+            background-color: $dark-grey;
+            color: white;
+            transition: .2s;
+        }
+    }
+}
+
+/* About Me */
+.about-me-container {
+    min-height: 20em;
+    max-width: 100vw;
+    @include flexFullCenter();
+}
+.about-me {
+    // background-color: $light-grey;
+    // @include smallBoxShadow(0, .1em, .1em, .1em, .05);
+    // padding: 3em;
+    width: 50%;
+    margin: 7em 0;
+    @include mQ($mobile) {
+        width: 90%;
+    }
+}
+
+/* Projects Section */
+.projects-title {
+    background-color: $dark-grey;
+    color: $yellow;
+    padding: 2em 0 2em 0;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    h2 {
+        width: 70%;
+    }
+    @include mQ($wideMobile) {
+        padding: 1em;
+    }
+}
+.project-details {
+    h1 {
+        color: white;
+    }
+    h4 {
+        color: grey;
+    }
+    h1, h4 {
+        padding: .2em;
+    }
+    
+    &:hover {
+        h1 {
+            color: $yellow;
+            transition: .2s;
+        }
+        h4 {
+            color: white;
+            transition: .2s;
+        }
+    }
+    @include mQ($wideMobile) {
+        text-align: center;
+    }
+}
+
+@mixin project-item($bgImg) {
+    background-image: url($bgImg);
+    background-color: $light-grey;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    
+    height: 20em;
+    &:before {
+        @include overlay(0.8);
+    }
+
+    @include flexFullCenter();
+    @include mQ($wideMobile) {
+        height: 25em;
+    }
+}
+// 
+.project-item-1 {
+    @include project-item('/img/jetstream/jetstream_bg_still.png');
+    &:hover {
+        @include project-item('/img/jetstream/jetstream_bg.gif');
+        &:before {
+            transition: 1s;
+            @include overlay(0);
+        }
+    }
+}
+.project-item-2 {
+    @include project-item('/img/kou_bg_1.png');
+    &:hover {
+        @include project-item('/img/kou.gif');
+        &:before {
+            transition: 1s;
+            @include overlay(0);
+        }
+    }
+}
+.project-content {
+    display: flex;
+    width: 70%;
+    position: absolute;
+    color: white;
+    z-index: 3;
+    img {
+        width: 15em;
+        margin-right: 1em;
+    }
+
+    div {
+        margin-left: 1em;
+    }
+
+    @include mQ($wideMobile) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Misc Section */
+.misc-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.misc-title {
+    width: 70%;
+    padding: 2em 0;
+    color: $grey;
+    @include mQ($tablet) {
+        display: flex;
+        justify-content: center;
+        padding: 1em;
+    }
+}
+.misc {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin-bottom: 2em;
+    height: 100%;
+    width: 70%;
+}
+.misc-item {
+    
+}
+.placeholder-div {
+    display: flex;
+    flex-grow: 1;
+    margin: .5em;
+    border: 3px solid black;
+    @include mQ($tablet) {
+        flex-grow: 0;
+
+    }
+}
+
+/* Footer Section */
+.footer {
+    @include flexFullCenter();
+    flex-direction: column;
+    background-color: $grey;
+    height: 10em;
+    width: 100%; 
+    padding: 7em;
+}
+.social-medias {
+    display: flex;
+    
+    img {
+        width: 3em;
+        margin: 1em;
+    }
+}
+.credit {
+    color: white;
+    background-color: $dark-grey;
+    padding: 2em;
+}
+.resume-button {
+    border: .2em solid $dark-yellow;
+    border-radius: .3em;
+    background-color: $yellow;
+    padding: 1em 3em 1em 3em;
+    white-space: nowrap; // So icon doesn't wrap in mobile
+
+    span {
+        position: relative;
+        left: 10%;
+        transition: .7s;
+    }
+    i {
+        opacity: 0;
+        position: relative;
+        display: inline-block; // So icon doesn't wrap in mobile
+    }
+    &:hover {
+        i {
+            opacity: 1;
+            display: inline-block;
+            transition: .7s;
+        }
+        span {
+            left: 0;
+            transition: .7s;
+        }
+    }
+    
+}
+
+
+
+/* INDIVIDUAL PROJECT PAGE */
+/* PROJECT Header */
+.project-hero-bg {
+    background-color: $grey;
+    height: 25em; 
+
+    @include mQ($tablet) {
+        height: 10em;
+    }
+}
+.hero-text {
+    @include flexFullCenter();
+    flex-direction: column;
+    height: 100%;
+    color: white;
+}
+.project-page-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 70%;
+    margin: auto;
+}
+.project-title {
+    @include flexFullCenter();
+    width: 70%;
+    margin: 3em 0 3em 0;
+    img {
+        width: 15em;
+        margin-right: 1em;
+    }
+
+    div {
+        margin-left: 1em;
+    }
+
+    @include mQ($wideMobile) {
+        flex-direction: column;
+        align-items: center;
+    }
+    .project-details {
+        h1 {
+            color: $yellow;
+        }
+        h4 {
+            color: $dark-grey;
+        }
+    }
+}
+.about-this-project {
+    margin: 3em 0 3em 0;
+    h3 {
+        margin-bottom: 1em;
+    }
+}
+
+.my-role {
+    h3 {
+        margin: 1em 0;
+    }
+}
+.my-role-item {
+    display: flex;
+    margin-bottom: 3em;
+    img {
+        width: 15em;
+        margin-right: 3em;
+    }
+    @include mQ($wideMobile) {
+        flex-direction: column;
+        align-items: center;
+        img {
+            margin-right: 0;
+        }
+    }
+}
+
+.trailer {
+    h3 {
+        margin: 1em 0;
+    }
+    display: flex;
+    flex-direction: column;
+    margin: 3em 0 3em 0;
+    width: 100%;
+    // min-height: 20em;
+    @include mQ($mobile) {
+        iframe {
+            // max-width: 560px;
+            // max-height: 315px;
+            // align-self: center;
+        }
+    }
+    @include mQ($tablet) {
+        iframe {
+            // max-width: 560px;
+            // max-height: 315px;
+            // align-self: center;
+        }
+    }
+    
+}
